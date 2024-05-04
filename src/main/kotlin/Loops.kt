@@ -43,7 +43,7 @@ fun main() {
     println("while")
     var i = 1
     while (i < 5) {
-        if(i==2) {
+        if (i == 2) {
             i++
             continue
         }
@@ -55,9 +55,27 @@ fun main() {
     var j = 0
     do {
         println(j)
-        if(j == 4){
+        if (j == 4) {
             break
         }
         j++
     } while (j <= 5)
+
+    //There is no traditional for loop in java, but we can generate ranges
+    //First and last value is included in the range
+    for (k in 1..5) {
+        println(k)
+    }
+
+    for (ch in 'a'..'e') {
+        println(ch)
+    }
+
+    //break
+    for (nums in 5..15) {
+        if (nums == 10) {
+            break
+        }
+        println(nums)
+    }
 }
