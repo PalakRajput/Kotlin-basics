@@ -63,6 +63,7 @@ fun main() {
 
     //There is no traditional for loop in java, but we can generate ranges
     //First and last value is included in the range
+    //last value is not excluded
     for (k in 1..5) {
         println(k)
     }
@@ -70,6 +71,22 @@ fun main() {
     for (ch in 'a'..'e') {
         println(ch)
     }
+
+    //backward loop
+    val range = 5 downTo 1
+    for(rangeNum in range){
+        println(rangeNum)
+    }
+    //last value is excluded from the range
+    val rangeWithUntil = 1.until(5)
+    val charRange = 'A'.until('G')
+    val rangeTo = 1.rangeTo(5)
+    println("Is range empty- ${rangeWithUntil.isEmpty()}")
+    println("Does range contains 5- ${rangeWithUntil.contains(5)}")
+    println("Number of elements in specified range: ${rangeWithUntil.count()}")
+    val reversedRange = rangeTo.reversed()
+    val rangeWithStep = rangeTo step 2
+    println(rangeWithStep.forEach({i -> println(i)}))
 
     //break
     for (nums in 5..15) {

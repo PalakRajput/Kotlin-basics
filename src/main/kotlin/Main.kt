@@ -16,10 +16,11 @@ fun main() {
 
     var name1 : String = "James"
     val age1 : Int = 26
+
     println(name1)
     print(age1)
 
-    //Variables can be declared without assigning the values but only when type is specified
+    //Variables can be declared without assigning the printValues but only when type is specified
     var name2 : String
     name2 = "John"
 
@@ -57,6 +58,10 @@ fun main() {
     //Booleans
     var isKotlinFun : Boolean = false
     var myTrue : Boolean = true
+
+    ///type of variables in Kotlin
+    println(myByte::class)
+    println("Type of myNum variable: ${myNum::class}")
 
     //var myCharacter : Char = 66 -> Error in Kotlin but will print the char corresponding to this ASCII value in java
     var myChar1 = 'A';
