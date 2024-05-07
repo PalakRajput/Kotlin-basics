@@ -3,6 +3,7 @@ fun main(){
     concatenateString("James", "Doe")
     println("Sum of two numbers: ${sum(3, 5)}")
     println("Summation of two numbers: ${summ(4, 5)}")
+    println("Divide two nums: ${divide(6, 0)}")
 }
 
 fun myFunction(){
@@ -19,3 +20,12 @@ fun sum(x: Int, y: Int) : Int {
 }
 
 fun summ(x: Int, y: Int) = x+y
+
+fun divide(x: Int, y: Int) : Int {
+    try {
+        return x/y
+    } catch (e: ArithmeticException){
+        println(e.message)
+        throw RuntimeException(e.message)
+    }
+}

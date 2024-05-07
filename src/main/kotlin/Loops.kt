@@ -77,6 +77,7 @@ fun main() {
     for(rangeNum in range){
         println(rangeNum)
     }
+    val rangeWithDotsAndStep = 1..5 step 2
     //last value is excluded from the range
     val rangeWithUntil = 1.until(5)
     val charRange = 'A'.until('G')
