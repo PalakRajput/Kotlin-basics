@@ -75,11 +75,22 @@ fun main() {
     //to convert to diff type use toLong(), toByte(), toShort(), toInt(), toFloat(), toDouble(), toChar()
 
     var myLong2 : Long = myInt2.toLong();
+    //For explicit type casting always check for NumberFormatException, check for null values before invoking the method
+    //Also we can use as? operator for safe casting, it doesn;t throw exception but returns null if casting fails
+
+    val x = 12
+    val y : String? = x as? String
+    println("y = $y")
 
     // == check for .equals(), === checks if two objects are pointing to same reference
 
 
-
+//Whenever kotlin code is compiled to byte code it converts the data types to its primitive type wherever possible
+    val myNonNullableInt : Int = 10
+    val myNullableInt : Int? = 20
+    //When the program is converted to byte code, myNonNullableInt will be primitive int and myNullableInt will be object Integer because it can be null.
+    //Also for the local function it will convert the nullable data type into primitive data type when the nullable value is never assigned a null value.
+    //So the conclusion is that Kotlin doesn’t have primitives directly but the data type in Kotlin converts to primitive data type at JVM level whenever possible.
 
 
 
