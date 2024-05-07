@@ -2,7 +2,8 @@
 /**
  * KDoc comment
  */
-class Flower(var name: String, var color: String) {
+//color property has a default value so it is not mandatory to pass it when creating object.
+class Flower(var name: String, var color: String = "Pink") {
     //Class/member function
     fun printValues() {
         println("Flower properties: $name $color")
@@ -64,10 +65,10 @@ class SampleWithBothPrimaryAndSecondaryConstructor(private val name: String, pri
 }
 
 fun main() {
-    /*val f1 = Flower("Rose", "Red")
+    val f1 = Flower("Rose")
     val f2 = Flower("Sunflower", "Yellow")
     f1.printValues()
-    f2.printValues()*/
+    f2.printValues()
 
     val s1 = SampleWithoutPrimaryConstructor("John", 20)
     //s1.age = 20 -> since the setter is set to private we cannot change the value here

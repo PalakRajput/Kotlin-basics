@@ -1,3 +1,5 @@
+//Functions are first class citizen in kotlin means they can be stored in a variable, returned from a function, passed as arguments.
+
 fun main(){
     myFunction()
     concatenateString("James", "Doe")
