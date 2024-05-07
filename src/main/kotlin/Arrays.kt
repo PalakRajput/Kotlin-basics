@@ -28,6 +28,7 @@ fun main() {
     var arr: Array<Int> = Array(5, { i -> i * 2 })
     println(arr[2])
 
+    //This gives array of primitives, similar to int[] in java
     var intArr = intArrayOf(5, 4, 45, 322, 23232)
     //Other factory methods -> byteArrayOf(), shortArrayOf(), longArrayOf(), charArrayOf()
     println(intArr[3])

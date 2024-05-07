@@ -23,7 +23,7 @@ class SampleWithoutPrimaryConstructor {
         println("Hey! I am executed even without the primary constructor because primary constructor is called implicitly from secondary constructor")
     }
 
-    //    var <propertyName>[: <PropertyType>] [= <property_initializer>]
+//    var <propertyName>[: <PropertyType>] [= <property_initializer>]
 //    [<getter>]
 //    [<setter>]
 //    There should not be anything present between property and getter/setter declaration otherwise there will be compile time error.
@@ -52,7 +52,7 @@ class SampleWithoutPrimaryConstructor {
 }
 
 class SampleWithBothPrimaryAndSecondaryConstructor(private val name: String, private val age: Int) {
-    private var color: String? = null
+    var color: String? = null
 
     //If primary constructor is present then explicitly call it using this(...) from secondary constructor
     constructor(name: String, age: Int, color: String) : this(name, age) {
