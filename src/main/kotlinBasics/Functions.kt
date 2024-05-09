@@ -27,7 +27,6 @@ fun main() {
 fun String.removeFirstLastChar(): String = this.substring(1, this.length - 1)
 
 
-
 /**
  * Infix function can only be member functions(defined inside class) or extension functions, they can have only 1 param and it should not be varargs or it cannot have default value
  */
@@ -83,3 +82,15 @@ fun divide(x: Int, y: Int): Int {
         throw RuntimeException(e.message)
     }
 }
+
+//Generic functions
+//After fun the angle brackets contains the types of input and output param
+fun <T, R> singletonList(item: T, value: R): List<T> {
+    return emptyList()
+}
+
+//Extension function with generics
+fun <T> T.basicToString(): String { // extension function
+    return ""
+}
+

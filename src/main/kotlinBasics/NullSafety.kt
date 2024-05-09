@@ -3,6 +3,7 @@ fun main(){
 
 //    Safe Calls (?.): Use the safe call operator when accessing properties or methods on a nullable object. This will return null if the object is null instead of throwing a NullPointerException.
 
+    val nonNullableString : String
     val nullableString : String? = null
     val lengthofString = nullableString?.length //length of string will be null
 
