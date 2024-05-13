@@ -16,16 +16,62 @@ fun main() {
     val ifd = InfixFunctionDemo(5)
     println("Calling infix function with infix notation(omitting . and parenthesis) ${ifd add 3}")
     println(ifd.add(4))
+    println(ifd multiplier 5)
 
     println("Calling extension function ${"Kotlin".removeFirstLastChar()}")
+    println("hello".capitalizeFirstLetter())
 
+    println(applyFivePercentDiscount(20.0))
+    println(apply5PerDiscount(20.0))
+
+    println(calculateTotalPrice(30.0, discountForCouponCode("FIVE_BUCKS")))
+    println(calculateTotalPrice(30.0, discountForCouponCode("TAKE_10")))
+
+    //calling calculate function with passing lambda as parameter
+    println(calculateTotalPrice(30.0, { price -> price - 5.0 }))
+    println(calculateTotalPrice(30.0, { price -> price * 0.9 }))
+
+}
+
+
+fun applyFivePercentDiscount(price: Double): Double = price - 5.0
+fun apply10PercentDiscount(price: Double): Double = price * 0.9
+fun noDiscount(price: Double): Double = price
+
+//Assigning function to a variable
+val apply5PerDiscount = ::applyFivePercentDiscount
+
+//lambda functions, the expression inside {} is called lambda or function literal
+//write input params before `->` and return
+val applyDiscount: (Double) -> Double = { price -> price - 5.0 }
+
+//applyDiscount is function which accepts double input and returns a double input
+//Creating type of the function -> (inputParamType) -> outputParamType
+//calculateTotalPrice is a higher order function because it takes a function as input
+fun calculateTotalPrice(initialPrice: Double, applyDiscount: (Double) -> Double): Double {
+    return applyDiscount(initialPrice) * 1.9;
+}
+
+//Returning function from a function
+fun discountForCouponCode(couponCode: String): (Double) -> Double = when (couponCode) {
+    "FIVE_BUCKS" -> ::applyFivePercentDiscount
+    "TAKE_10" -> ::apply10PercentDiscount
+    else -> ::noDiscount
+}
+
+fun discountForCouponCodeWithLambdas(couponCode: String): (Double) -> Double = when (couponCode) {
+    "FIVE_BUCKS" -> { price -> price - 5.0 }
+    "TAKE_10" -> { price -> price * 0.9 }
+    else -> { price -> price }
 }
 
 /**
  * Extension function is a member function of a class which is defined outside the class.
  */
 fun String.removeFirstLastChar(): String = this.substring(1, this.length - 1)
-
+fun String.capitalizeFirstLetter(): String {
+    return this.replaceFirst(this[0], this[0].uppercaseChar())
+}
 
 /**
  * Infix function can only be member functions(defined inside class) or extension functions, they can have only 1 param and it should not be varargs or it cannot have default value
@@ -33,6 +79,9 @@ fun String.removeFirstLastChar(): String = this.substring(1, this.length - 1)
 class InfixFunctionDemo(val num: Int) {
     infix fun add(num1: Int): Int {
         return this.num + num1
+    }
+    infix fun multiplier(num2: Int): Int {
+        return num2 * 2
     }
 }
 

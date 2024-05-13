@@ -82,6 +82,7 @@ fun main() {
     val rangeWithUntil = 1.until(5)
     val charRange = 'A'.until('G')
     val rangeTo = 1.rangeTo(5)
+    println(rangeTo.forEach({i -> println(i)}))
     println("Is range empty- ${rangeWithUntil.isEmpty()}")
     println("Does range contains 5- ${rangeWithUntil.contains(5)}")
     println("Number of elements in specified range: ${rangeWithUntil.count()}")

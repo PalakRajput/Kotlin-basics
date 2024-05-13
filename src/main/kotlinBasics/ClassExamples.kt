@@ -190,12 +190,25 @@ class Cat(override var name: String) : Pet {
 }
 
 /**
- * Data classes can't be sealed, inner, abstract or open.
+ * Data classes can't be sealed, inner, abstract or open, so these can't be extended.
  * Getters, setters, hashcode, tostring, equals, componentN, copy functions are created by default.
- * These are like pojos
+ * These are like pojos.
+ * Since these classes provide componentN functions we can do destructuring to get values of the properties
+ * There should be atleast 1 property present in primary constructor because that is used by equals, hashcode and toString methods
+ * Any other properties defined in the body of the class will not be considered by the 3 methods.
  */
 data class Character(val name: String, val age: Int)
 
+enum class EnumWithPropsAndFunctions(val height : Int){
+    CORGI(23),
+    GOLDEN(30); //-> semicolon is required after last enum entry
+
+    val family: String = "Dogs"
+
+    fun printFromEnum() = println("Enum can have functions")
+
+    //To access these function and property outside the class use EnumName.property/function
+}
 enum class Types {
     BASIC,
     STANDARD,

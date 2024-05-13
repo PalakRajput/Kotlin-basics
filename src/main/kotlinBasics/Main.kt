@@ -17,6 +17,7 @@ fun main() {
     var name1 : String = "James"
     val age1 : Int = 26
 
+
     println(name1)
     print(age1)
 
