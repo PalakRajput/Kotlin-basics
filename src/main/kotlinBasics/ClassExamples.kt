@@ -1,3 +1,6 @@
+package kotlinBasics
+
+
 //All classes in kotlin have common superclass 'Any' which has 3 methods, equals(), hashCode() and toString()
 /**
  * Class with secondary constructor
@@ -18,6 +21,29 @@ class Person {
  */
 class PersonPC(val name: String, val age: Int) {
 
+}
+
+open class ClassWithSecondaryConstructor {
+    var name: String
+    var age: Int
+    constructor(name: String, age: Int) {
+        this.name = name
+        this.age = age
+    }
+    open fun printProps() {
+        println("$name - $age")
+    }
+}
+
+open class ClassWithBothPrimaryAndSecondaryConstructor(val name: String) {
+    var age: Int = 0
+
+    constructor(name: String, age: Int) : this(name) {
+        this.age = age
+    }
+    open fun printProps() {
+        println("$name - $age")
+    }
 }
 
 /**
@@ -205,10 +231,11 @@ enum class EnumWithPropsAndFunctions(val height : Int){
 
     val family: String = "Dogs"
 
-    fun printFromEnum() = println("Enum can have functions")
+    fun printFromEnum() = println("Enum can have functions ${this.height}")
 
     //To access these function and property outside the class use EnumName.property/function
 }
+
 enum class Types {
     BASIC,
     STANDARD,
@@ -241,6 +268,7 @@ fun main() {
     mickeyMouseToday.component2() // => age
 
     println(Types.BASIC.name)
+    println("Calling function present in enum class: ${EnumWithPropsAndFunctions.CORGI.printFromEnum()}")
 
 
     val printVal = PetEx { val1: String, val2: String  -> println("$val1 - $val2") }
@@ -254,4 +282,11 @@ fun main() {
  */
 fun interface PetEx {
     fun printValues(name: String, breed: String)
+}
+
+class ShapeExt(type: String) : Shape(type){
+    override fun area() {
+        println("In different package")
+    }
+
 }

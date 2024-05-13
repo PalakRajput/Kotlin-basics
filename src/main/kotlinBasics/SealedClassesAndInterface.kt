@@ -1,5 +1,6 @@
 package kotlinBasics
 
+import kotlin.math.pow
 import kotlin.random.Random
 
 //Sealed classes and interface can be used to make when statement exhaustive
@@ -51,4 +52,30 @@ fun main(){
     HandleRequest.handleRequest(sr)
     HandleRequest.handleRequest(or)
     HandleRequest.handleRequest(rr)
+    val shape1: Shape = RectangleSh(12, 15,"Rectangle")
+    val shape2: Shape = SquareSh(6, "Square")
+    val shape3 = CircleSh(5.0, "Circle")
+    shape1.area()
+    shape3.area()
+}
+
+sealed class Shape(val type: String) {
+    abstract fun area()
+}
+
+class RectangleSh(val height: Int, val width: Int, type: String) : Shape(type) {
+    override fun area() {
+        println("Area of rectangle is: ${height * width}")
+    }
+
+}
+class SquareSh(val edge: Int, type: String) : Shape(type) {
+    override fun area() {
+        println("Area of square is: ${edge * edge}")
+    }
+}
+class CircleSh(val radius: Double, type: String) : Shape(type) {
+    override fun area() {
+        println("Area of circle is: ${3.14 * radius.pow(2.0)}")
+    }
 }
