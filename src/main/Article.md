@@ -15,7 +15,8 @@ In Kotlin, we can declare variables using `var`(Mutable) or `val`(Read-only) key
 val myVariable = "Hello World!"
 var myMutableVariable = "Hello World!"
 
-//Variables can be initialized after declaration, but in this case, it is necessary to specify the type of the variable.var variable: String
+//Variables can be initialized after declaration, but in this case, it is necessary to specify the type of the variable.
+var variable: String
 variable = "Can be initialized separately from declaration"
 ```
 
@@ -38,8 +39,8 @@ If we want to specify the type in Kotlin the syntax is `val variableName : DataT
 
 #### Types available in Kotlin:
 
-> Note: Kotlin doesn't have primitive types. But Whenever kotlin code is compiled to byte code it converts the data
-> types to its primitive type wherever possible.
+> Note: Kotlin does not have primitive types like Java. However, when Kotlin code is compiled to bytecode, it converts
+> the data types to their equivalent Java primitive types wherever possible.
 >
 > Example: <br/>
 > ```kotlin
@@ -127,10 +128,11 @@ Kotlin provides null safety, meaning that null values cannot be assigned to non-
 to the Optional type in Java, which is used to handle nullable values.
 
 ```kotlin
-val string: String = null //Compile time error as we are trying to assign nullable value to non-nullable type.
+val string: String = null //Compile time error as we are trying to assign a null value to a non-nullable type.
 val nullableString: String? = null //Works fine
 println("Getting string length using safe call operator(?): ${nullableString?.length}")
 println("Providing default value if string is null using elvis operator: ${nullableString ?: "Default value"}")
+println("Non null assertion operator to throw NPE: ${nullableString!!.length}")
 ```
 
 ## Conditional Statements and Loops
@@ -335,8 +337,11 @@ fun main() {
 
 ### Classes
 
-In Kotlin, a class is defined using class keyword.
+In Kotlin, a class is defined using `class` keyword.
 Getter and setters are generated for the properties automatically, but they can be overridden if required.
+A class can have a primary constructor and one or more secondary constructors. The primary constructor is defined in the
+class header, and the secondary constructors are defined in the class body. If a class has both a primary and secondary
+constructor, the primary constructor must be called from the secondary constructor.
 
 * Class with primary constructor: The primary constructor is present in the class header. The constructor keyword can be
   omitted if there are no annotations of access modifier specified.
@@ -560,14 +565,35 @@ In Kotlin, we have public, private and protected and internal access specifiers.
 * internal: Visible in same module(set of Kotlin files compiled together).
 * protected: This specifier is not available for top level declarations. Visible to subclasses.
 
+```kotlin
+open class MyClass {
+    public val a: Int = 10 //Can be access outside the class by creating the object of the class.
+    private val b: Int = 20 //This can only be accessed in this class.
+    protected val c: Int = 30 //This can be accessed in subclasses of MyClass
+    internal val d: Int = 40 //This can be accessed in same module.
+}
+```
+
 ## Exception Handling
+
+In Kotlin, all exceptions are unchecked, which means the compiler does not mandate the handling or declaration of these
+exceptions. However, for interoperability with Java, the @Throws annotation can be used. This annotation informs the
+Java compiler about the potential exceptions a function might throw, but it doesn't enforce any exception handling
+within Kotlin itself.
+
+Kotlin does not support multi-catch blocks. Therefore, to handle multiple exceptions, you must either write individual
+catch blocks for each exception type or use a when expression within a single catch block.
 
 ```kotlin
 fun divide(num1: Double, num2: Double): Double {
     try {
         return num1 / num2
-    } catch (ae: ArithmeticException) {
-        println("Exception occurred while dividing two numbers: ${ae.message}")
+    } catch (ae: Exception) {
+        when (ae) {
+            is ArithmeticException -> println("ArithmeticException occurred while performing some operation: ${ae.message}")
+            is ArrayIndexOutOfBoundsException -> println("ArrayIndexOutOfBoundsException occurred while performing some operation: ${ae.message}")
+            else -> println("Exception occurred while performing some operation: ${ae.message}")
+        }
         return 0.0
     }
 }
@@ -575,13 +601,17 @@ fun divide(num1: Double, num2: Double): Double {
 fun divideWithoutTry(num1: Double, num2: Double) = num1 / num2
 
 fun main() {
-    val result = divideWithoutTry(12.0, 0.0)
+    val result = divide(12.0, 0.0)
+//  The runCatching function is a higher-order function that internally uses a try expression. 
+//  This allows you to avoid writing explicit try-catch blocks in your code. 
+//  The getOrNull, getOrElse and getOrDefault methods can be used to handle the result of the operation.    
+
     println(runCatching {
         divideWithoutTry(
             12.0,
             0.0
         )
-    }.getOrNull()) //This will try to divide and returns null in case of error.
+    }.getOrNull())//This will try to divide and returns null in case of error.
     println(runCatching {
         divideWithoutTry(
             12.0,
