@@ -15,8 +15,7 @@ In Kotlin, we can declare variables using `var`(Mutable) or `val`(Read-only) key
 val myVariable = "Hello World!"
 var myMutableVariable = "Hello World!"
 
-//Variables can be initialized value after declaration but in this it is necessary to specify the type of the variable.
-var variable: String
+//Variables can be initialized after declaration, but in this case, it is necessary to specify the type of the variable.var variable: String
 variable = "Can be initialized separately from declaration"
 ```
 
@@ -32,7 +31,7 @@ listOfInt = mutableListOf(3, 2, 1, 4) //Compiler error(variable can't be reassig
 
 ### Types
 
-In the variable declaration you might have noticed that we didn't specify the type of the variable and it worked fine.
+In the variable declaration, you might have noticed that we didn't specify the type of the variable and it worked fine.
 The ability of Kotlin to infer type of the variable from the value assigned to it is called type inference.
 
 If we want to specify the type in Kotlin the syntax is `val variableName : DataType = literal`
@@ -70,6 +69,14 @@ val concatenatedString = stringVariable.plus(" World")
 ```
 
 > Strings are immutable in Kotlin.
+> String interpolation:
+> ```kotlin
+> fun main(){
+> val num1 = 10
+> val num2 = 20
+> println("Sum of num1 and num2 is: ${num1 + num2}")
+> }
+> ```
 
 3. Boolean
 
@@ -95,7 +102,7 @@ val charVariable: Char = 'A'
 > ```kotlin
 > var myChar1 = 'A'
 > var myChar2 = 'B'
-> var sum = myChar1 + myChar2 //Compile time error(type mismatch)
+> var sum = myChar1 + myChar2 //Compile time error(type mismatch). In Java this will work fine and print the sum of ASCII value of the chars.
 > ```
 
 5. Array
@@ -126,7 +133,34 @@ println("Getting string length using safe call operator(?): ${nullableString?.le
 println("Providing default value if string is null using elvis operator: ${nullableString ?: "Default value"}")
 ```
 
-## Loops & Statements
+## Conditional Statements and Loops
+
+### if
+
+```kotlin
+var array = arrayOf(1, 2, 3, 4, 5)
+if (3 in array) {
+    println("Found element 3 in the array")
+} else {
+    println("Element not found")
+}
+//If can be used as expression. It behaves as ternary operator
+val time = 13
+val greeting = if (time < 12) "Good Morning" else "Good afternoon"
+```
+
+### when
+
+```kotlin
+val int = 10
+//When is equivalent of switch in Java
+val result = when (int) {
+    1 -> "One"
+    2 -> "Two"
+    in 3..6 -> "Between 3 to 6"
+    else -> "Other"
+}
+```
 
 ### for
 
@@ -143,7 +177,8 @@ array.forEach { element -> println(element) }
 for (i in array.indices) {
     println(array[i])
 }
-//There is no traditional for loop in Java but we can use ranges
+
+//There is no traditional for loop in Kotlin, but we can use ranges
 
 for (ch in 'A'..'Z')
     println(ch) //Prints alphabets from 'A' to 'Z'
@@ -165,33 +200,6 @@ for (num in 1.until(10)) {
 //Reverse for loop
 val range = 1.until(10).reversed()
 for (num in 20 downTo 0) {
-}
-```
-
-### if
-
-```kotlin
-var array = arrayOf(1, 2, 3, 4, 5)
-if (3 in array) {
-    println("Found element 3 in the array")
-} else {
-    println("Element not found")
-}
-//If can be used as expression. It behaves are ternary operator
-val time = 13
-val greeting = if (time < 12) "Good Morning" else "Good afternoon"
-```
-
-### when
-
-```kotlin
-val int = 10
-//When is equivalent of switch in Java
-val result = when (int) {
-    1 -> "One"
-    2 -> "Two"
-    in 3..6 -> "Between 3 to 6"
-    else -> "Other"
 }
 ```
 
@@ -221,7 +229,7 @@ do {
 
 ### Functions
 
-Functions are called first class citizen in Kotlin. They can be passed as arguments, returned from the function and
+Functions are considered first-class citizens in Kotlin. They can be passed as arguments, returned from the function and
 stored in variable.
 
 **main()** function is the entry point of a program. It is not necessary to put it in class as once it is compiled it
@@ -241,6 +249,7 @@ fun main() {
     println(myAnonymousFunction(1, 2))
     println("Calling lambda function: ${multiplierLambda(3)}")
     println("Passing function as an argument: ${functionIsPassedAsArgument(5, multiplierLambda)}")
+    println(myFunctionWithDefaultValues(30))
 }
 
 fun performArithmeticOperations(x: Int, y: Int, choice: Int): Int {
@@ -263,6 +272,10 @@ fun myVoidFunction(x: Int, y: Int): Unit {
 fun functionIsPassedAsArgument(x: Int, multiplier: (Int) -> Int): Int {
     val multipliedValue = multiplier(x)
     return multipliedValue + 5
+}
+
+fun myFunctionWithDefaultValues(x: Int = 10, y: Int = 20): Unit {
+    println("Sum of two numbers: ${x + y}")
 }
 ```
 
@@ -322,27 +335,50 @@ fun main() {
 
 ### Classes
 
-In kotlin, a class is defined using class keyword. All the classes are final by default so in order to allow them to be
-extended by other classes, open keyword is used.
+In Kotlin, a class is defined using class keyword.
 Getter and setters are generated for the properties automatically, but they can be overridden if required.
 
 * Class with primary constructor: The primary constructor is present in the class header. The constructor keyword can be
   omitted if there are no annotations of access modifier specified.
 
 ```kotlin
+//In constructor, if we don't specify val or var keyword then those properties will not be class properties they will just be params passed to constructor.
+//Both the class definition are same
+class MyClass constructor(val name: String, val age: Int) {
+    fun printProps() {
+        println("$name - $age")
+    }
+}
 
-open class MyClass(val name: String, val age: Int) {
-    open fun printProps() {
+class MyClass(val name: String, val age: Int) {
+    fun printProps() {
         println("$name - $age")
     }
 }
 ```
 
-* Class with secondary constructor
+* Class with init blocks: Primary constructor cannot contain any runnable code hence init blocks are used to perform any
+  operation just after primary constructor is called. They are executed in the order they are defined. If a class has
+  both primary and secondary constructor and init blocks, the body of the secondary constructor will be executed after
+  primary constructor and init block.
+
+```kotlin
+class ClassWithInitBlock(private var name: String, val age: Int) {
+    init {
+        name = name.uppercase()
+    }
+
+    init {
+        name = name.lowercase()
+    }
+}
+```
+
+* Class with secondary constructor: `var` or `val` can't be used on secondary constructor.
 
 ```kotlin
 
-open class MyClass {
+class MyClass {
     var name: String
     var age: Int
 
@@ -351,7 +387,7 @@ open class MyClass {
         this.age = age
     }
 
-    open fun printProps() {
+    fun printProps() {
         println("$name - $age")
     }
 }
@@ -362,22 +398,54 @@ open class MyClass {
 
 ```kotlin
 
-open class MyClass(var name: String) {
+class MyClass(var name: String) {
 
-    //Property should be initialized because the class object can be created by just primary constructor
+    //Property should be initialized because the class object can be created by just primary constructor also
     var age: Int = 0
 
     constructor(name: String, age: Int) : this(name) {
         this.age = age
     }
 
-    open fun printProps() {
+    fun printProps() {
         println("$name - $age")
     }
 }
 ```
 
-* Data class: These are like POJOs in Java. If a class is defined using data keyword the getters, setters, hashCode,
+* Inheritance: All the classes, variables & functions are public & final by default, so in order to allow them to be
+  extended by other classes, open keyword is used.
+
+```kotlin
+open class Animal {
+    val color: String = "Black"
+    open fun eat() {
+        println("Eating food.")
+    }
+}
+
+class Cat : Animal() {
+    val age: Int = 4
+    fun speak() {
+        println("Meow")
+    }
+}
+class Dog : Animal() {
+    val age: Int = 4
+    fun speak() {
+        println("Bark")
+    }
+}
+
+fun main() {
+    val dog = Dog()
+    println("${dog.color} - ${dog.age} - ${dog.eat()} - ${dog.speak()}")
+    val cat = Cat()
+    println("${cat.color} - ${cat.age} - ${cat.eat()} - ${cat.speak()}")
+}
+```
+
+* **Data class**: These are like POJOs in Java. If a class is defined using data keyword the getters, setters, hashCode,
   equals, toString, copy and componentN functions are generated by default.
 
 ```kotlin
@@ -397,7 +465,7 @@ fun main() {
 > At least one property should be present in primary constructor.
 > The property present in primary constructor will be used to generated hashCode, equals and toString methods.
 
-* Enum class: Way to represent finite set of possible values. These classes can have member functions as well.
+* **Enum class**: Way to represent finite set of possible values. These classes can have member functions as well.
 
 ```kotlin
 enum class MyEnum(val hexCode: String) {
@@ -418,7 +486,7 @@ fun main() {
 }
 ```
 
-* Sealed classes: Just like Java 17's sealed classes only specific classes can extend it. The classes which extend
+* **Sealed classes**: Just like Java 17's sealed classes only specific classes can extend it. The classes which extend
   sealed class should be present in same code base & same package.
 
 ```kotlin
@@ -446,14 +514,80 @@ class Circle(val radius: Double, type: String) : Shape(type) {
 }
 ```
 
+* **Abstract class**: Abstract class is specified with abstract keyword. Abstract class cannot be instantiated.
+  Abstract class and abstract methods are open by default but default methods are not open, to override them in child
+  class use `open` keyword.
+
+```kotlin
+abstract class MyAbstractClass(val name: String, val age: Int) {
+    fun printProps() {
+        println("$name - $age")
+    }
+    abstract fun myAbstractFunction()
+}
+
+class Child(name: String, age: Int) : MyAbstractClass(name, age) {
+    override fun myAbstractFunction() {
+        println("Overridden abstract function in child class.")
+    }
+}
+
+fun main() {
+    val child = Child("James", 10)
+    child.printProps()
+    child.myAbstractFunction()
+}
+```
+
 #### Objects
 
-Objects can be created calling the constructor using the class name and specifying properties inside parenthesis.
+Objects can be created by calling the constructor using the class name and specifying properties inside parentheses.
 Kotlin doesn't use `new` keyword for creating objects.
 
 ```kotlin
 fun main() {
     val circle: Circle = Circle(10.0, "Circle")
     circle.area()
+}
+```
+
+#### Visibility modifiers
+
+In Kotlin, we have public, private and protected and internal access specifiers.
+
+* public: Default specifier. Visible everywhere.
+* private: Only visible in the same file.
+* internal: Visible in same module(set of Kotlin files compiled together).
+* protected: This specifier is not available for top level declarations. Visible to subclasses.
+
+## Exception Handling
+
+```kotlin
+fun divide(num1: Double, num2: Double): Double {
+    try {
+        return num1 / num2
+    } catch (ae: ArithmeticException) {
+        println("Exception occurred while dividing two numbers: ${ae.message}")
+        return 0.0
+    }
+}
+
+fun divideWithoutTry(num1: Double, num2: Double) = num1 / num2
+
+fun main() {
+    val result = divideWithoutTry(12.0, 0.0)
+    println(runCatching {
+        divideWithoutTry(
+            12.0,
+            0.0
+        )
+    }.getOrNull()) //This will try to divide and returns null in case of error.
+    println(runCatching {
+        divideWithoutTry(
+            12.0,
+            0.0
+        )
+    }.getOrDefault(0.0)) //This will return the result and return 0.0 as default value in case of exception.
+    println(runCatching { divideWithoutTry(12.0, 0.0) }.getOrElse { exception -> exception.message })
 }
 ```

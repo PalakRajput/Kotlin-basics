@@ -273,8 +273,16 @@ fun main() {
 
     val printVal = PetEx { val1: String, val2: String  -> println("$val1 - $val2") }
     println(printVal.printValues("Tom", "Corgi"))
+    val initBlockClass = ClassWithInitBlock("Palak", 25)
+    println(initBlockClass.name)
 }
 
+open class ClassWithInitBlock(var name: String, val age: Int){
+    init {
+        name = name.uppercase()
+    }
+
+}
 
 /**
  * Functional interface in kotlin is specified using fun keyword as opposed to @FunctionalInterface in Java.
@@ -290,3 +298,4 @@ class ShapeExt(type: String) : Shape(type){
     }
 
 }
+
