@@ -91,10 +91,10 @@ fun main() {
     println(rangeWithStep.forEach({i -> println(i)}))
 
     //break
-    for (nums in 5..15) {
-        if (nums == 10) {
+    for (int in 5..15) {
+        if (int == 10) {
             break
         }
-        println(nums)
+        println(int)
     }
 }

@@ -41,7 +41,7 @@ fun main() {
 
     //Default implementation is LinkedHashMap
     val mutableMap1 = hashMapOf(1 to 2, 3 to 4, 5 to 3)
-    val mutableMap = mutableMapOf("one" to 1, "two" to 2)
+    val mutableMap = mutableMapOf("one".to(1), "two" to 2)
     mutableMap.put("three", 3)
     mutableMap["one"] = 11
 

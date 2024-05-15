@@ -2,8 +2,16 @@
 
 Kotlin is a statically typed programming language that runs on the Java Virtual Machine (JVM) and can be used to develop
 all kinds of applications, from server-side, client-side web to Android applications. This article aims to provide a
-comprehensive understanding of Kotlin's basics, its advantages, data types, loops, functions, and how to run a Kotlin
-program.
+comprehensive understanding of Kotlin's basics, its features, data types, loops, functions, classes.
+
+## Features
+
+* Null Safety: Kotlin's system eliminates the risk of null references from the code, which could lead to NPE.
+* Interoperability: Kotlin is fully interoperable with Java, which means developers can use all existing Java libraries,
+  frameworks and runtimes.
+* Concise Syntax: Kotlin has a more concise syntax, which makes the code more readable and easier to understand.
+* Default Arguments and Named Parameters: Kotlin supports default arguments in functions and named parameters.
+* Extension functions: Allows to extend functionality of an existing class.
 
 ## Variables & Types
 
@@ -37,12 +45,12 @@ The ability of Kotlin to infer type of the variable from the value assigned to i
 
 If we want to specify the type in Kotlin the syntax is `val variableName : DataType = literal`
 
-#### Types available in Kotlin:
 
 > Note: Kotlin does not have primitive types like Java. However, when Kotlin code is compiled to bytecode, it converts
 > the data types to their equivalent Java primitive types wherever possible.
 >
 > Example: <br/>
+> 
 > ```kotlin
 > val myNonNullableInt : Int = 10
 > val myNullableInt : Int? = 20
@@ -69,8 +77,9 @@ val substring = stringVariable.substring(1, 4)
 val concatenatedString = stringVariable.plus(" World")
 ```
 
-> Strings are immutable in Kotlin.
+> Strings are immutable in Kotlin.<br/>
 > String interpolation:
+> 
 > ```kotlin
 > fun main(){
 > val num1 = 10
@@ -94,12 +103,15 @@ val charVariable: Char = 'A'
 
 > Note: There is no implicit type casting in Kotlin. So we cannot directly assign Int variable to Long.
 > We can use methods like toInt(), toFloat(), etc..
+>
 > ```kotlin
 > val intVar : Int = 10
 > var longVar : Long = intVar //Compile time error(type mismatch)
 > longVar = intVar.toLong() //Works fine
 > ```
+> 
 > In Kotlin we cannot use arithmetic operators on two char data types:
+> 
 > ```kotlin
 > var myChar1 = 'A'
 > var myChar2 = 'B'
@@ -252,6 +264,7 @@ fun main() {
     println("Calling lambda function: ${multiplierLambda(3)}")
     println("Passing function as an argument: ${functionIsPassedAsArgument(5, multiplierLambda)}")
     println(myFunctionWithDefaultValues(30))
+    println("Calling functions with named parameters: ${myFunctionWithDefaultArguments(x = 50, y = 30)}")
 }
 
 fun performArithmeticOperations(x: Int, y: Int, choice: Int): Int {
@@ -276,9 +289,10 @@ fun functionIsPassedAsArgument(x: Int, multiplier: (Int) -> Int): Int {
     return multipliedValue + 5
 }
 
-fun myFunctionWithDefaultValues(x: Int = 10, y: Int = 20): Unit {
+fun myFunctionWithDefaultArguments(x: Int = 10, y: Int = 20): Unit {
     println("Sum of two numbers: ${x + y}")
 }
+
 ```
 
 **Lambda functions**: Always enclosed in curly braces. Before arrow(->), specify the input parameters and after arrow
@@ -567,7 +581,8 @@ In Kotlin, we have public, private and protected and internal access specifiers.
 
 ```kotlin
 open class MyClass {
-    public val a: Int = 10 //Can be access outside the class by creating the object of the class.
+    public val a: Int =
+        10 //Can be access outside the class by creating the object of the class. public specifier is redundant here because by default this field will be public.
     private val b: Int = 20 //This can only be accessed in this class.
     protected val c: Int = 30 //This can be accessed in subclasses of MyClass
     internal val d: Int = 40 //This can be accessed in same module.
